@@ -28,8 +28,7 @@ namespace CrudCharts
 		{
 			var sqlConnectionString = Configuration.GetConnectionString("DataAccessPostgreSqlProvider");
 
-			services.AddDbContext<TreinamentoContext>(opt => opt.UseNpgsql(sqlConnectionString,
-				b => b.MigrationsAssembly("APIFretes")));
+			services.AddDbContext<TreinamentoContext>(opt => opt.UseNpgsql(sqlConnectionString));
 
 			services.Configure<CookiePolicyOptions>(options =>
 			{
