@@ -1,0 +1,26 @@
+tabelas
+produtos / serviço
+vendas
+orçamentos
+entradas
+
+nfei
+nfec
+nfsc
+nfsi
+orcamento_c
+orcamento_i
+funcionario 
+produto
+cliente 
+fornecedor
+
+
+
+- sugestão de venda dos produtos baseado nas vendas dos produtos de anos anterires 
+- produtos com maior crescimente de vendas por periodos
+
+- sugestão de promoção baseada em produtos não vendidos/ parado;
+- sugestão de compra com base nos dados;
+- Porcentagem de comissão 
+ 
