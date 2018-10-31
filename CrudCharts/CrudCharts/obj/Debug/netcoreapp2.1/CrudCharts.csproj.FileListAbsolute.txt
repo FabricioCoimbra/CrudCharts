@@ -35,3 +35,8 @@ C:\Fontes\CSharp\ProcessoDecisorio\CrudCharts\CrudCharts\obj\Debug\netcoreapp2.1
 C:\Fontes\CSharp\ProcessoDecisorio\CrudCharts\CrudCharts\obj\Debug\netcoreapp2.1\Razor\Views\Logins\Details.g.cshtml.cs
 C:\Fontes\CSharp\ProcessoDecisorio\CrudCharts\CrudCharts\obj\Debug\netcoreapp2.1\Razor\Views\Logins\Edit.g.cshtml.cs
 C:\Fontes\CSharp\ProcessoDecisorio\CrudCharts\CrudCharts\obj\Debug\netcoreapp2.1\Razor\Views\Logins\Index.g.cshtml.cs
+C:\Fontes\CSharp\ProcessoDecisorio\CrudCharts\CrudCharts\obj\Debug\netcoreapp2.1\Razor\Views\Acessoes\Create.g.cshtml.cs
+C:\Fontes\CSharp\ProcessoDecisorio\CrudCharts\CrudCharts\obj\Debug\netcoreapp2.1\Razor\Views\Acessoes\Delete.g.cshtml.cs
+C:\Fontes\CSharp\ProcessoDecisorio\CrudCharts\CrudCharts\obj\Debug\netcoreapp2.1\Razor\Views\Acessoes\Details.g.cshtml.cs
+C:\Fontes\CSharp\ProcessoDecisorio\CrudCharts\CrudCharts\obj\Debug\netcoreapp2.1\Razor\Views\Acessoes\Edit.g.cshtml.cs
+C:\Fontes\CSharp\ProcessoDecisorio\CrudCharts\CrudCharts\obj\Debug\netcoreapp2.1\Razor\Views\Acessoes\Index.g.cshtml.cs
