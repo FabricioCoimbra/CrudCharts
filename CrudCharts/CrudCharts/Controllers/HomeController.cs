@@ -6,11 +6,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CrudCharts.Models;
 using System.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
 namespace CrudCharts.Controllers
 {
 	public class HomeController : Controller
 	{
+		private readonly TreinamentoContext _context;
+
+		public HomeController(TreinamentoContext context)
+		{
+			_context = context;
+		}
+
 		public IActionResult Index()
 		{
 			ViewData["Message"] = "Meu titulo personalizado";
@@ -46,8 +55,44 @@ namespace CrudCharts.Controllers
 		}
 
 		[HttpPost]
-		public JsonResult NovoGrafico()
+		public async Task<JsonResult> NovoGrafico()
 		{
+			var conn = _context.Database.GetDbConnection();
+			List<RankingVendas> ListaProdutosMaisVendidos = new List<RankingVendas>();
+
+			try
+			{
+				await conn.OpenAsync();
+				using (var command = conn.CreateCommand())
+				{
+					string query = "select nfsi.cd_prodserv, " +
+								 " count(nfsi.cd_prodserv) as quantidadeProdutosvendidos, " +
+								 " sum(nfsi.vl_total) as valorProdutosVendidos " +
+							" from nfsi " +
+						   " group by 1 " +
+							"order by sum(nfsi.vl_total)";
+					command.CommandText = query;
+					DbDataReader reader = await command.ExecuteReaderAsync();
+
+					if (reader.HasRows)
+					{
+						while (await reader.ReadAsync())
+						{
+							var row = new RankingVendas { cd_prodserv = reader.GetInt32(0),
+														  quantidadeProdutosvendidos = reader.GetDouble(1),
+														  valorProdutosVendidos = reader.GetDouble(2) };
+							ListaProdutosMaisVendidos.Add(row);
+						}
+					}
+					reader.Dispose();
+				}
+			}
+			finally
+			{
+				conn.Close();
+			}
+			
+
 			List<object> iDados = new List<object>();
 			//Criando dados de exemplo
 			DataTable dt = new DataTable();
@@ -55,7 +100,7 @@ namespace CrudCharts.Controllers
 			dt.Columns.Add("Unidades", System.Type.GetType("System.Int32"));
 			DataRow dr = dt.NewRow();
 			dr["Vendas"] = "Chevrolet Onix";
-			dr["Unidades"] = 171;
+			dr["Unidades"] = 50;// ListaProdutosMaisVendidos.Count;
 			dt.Rows.Add(dr);
 			dr = dt.NewRow();
 			dr["Vendas"] = "Huynday HB20";
@@ -81,7 +126,7 @@ namespace CrudCharts.Controllers
 				iDados.Add(x);
 			}
 			//Dados retornados no formato JSON
-			return Json(iDados);
+			return Json(ListaProdutosMaisVendidos);
 		}
 	}
 }

@@ -15,6 +15,8 @@ namespace CrudCharts.Models
         {
         }
 
+		public virtual DbSet<RankingVendas> RankingVendas { get; set; }
+
 		public virtual DbSet<Login> Login { get; set; }
 		public virtual DbSet<PedidoFrete> PedidoFrete { get; set; }
 		public virtual DbSet<Rotas> Rotas { get; set; }

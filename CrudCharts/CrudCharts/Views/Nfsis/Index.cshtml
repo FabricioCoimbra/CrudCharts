@@ -1,0 +1,809 @@
+﻿@model IEnumerable<CrudCharts.Models.Nfsi>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CdProdserv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NmProdserv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlServico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QtProduto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBruto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PcDesconto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlLiquido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecoMinimo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CdFuncionario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DtEmissao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PesoLiquido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CdCancelamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cst)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PcRedBaseIcm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlicIcm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlicIcmSubst)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlicIpi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlicIss)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseIcm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlIcm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlIcmSubst)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlIpi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlIss)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlTributacaoInf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseComissao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlComissao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PcComissao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlComissaoInf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Compl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DtAtz)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Un)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlControlarEstoque)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlacaVeiculo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kilometragem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlClassfiscal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlIssSubst)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlComposto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Composicao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseIcmSubst)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlFreteRateado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlicUfDestino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cfop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlDesconto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlDescontoRateado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlAcrescimoRateado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlSeguroRateado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlContabil)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlOutros)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlIsento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlicPis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBasePis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlPis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlicCofins)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseCofins)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlCofins)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseIss)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseIpi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Iat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PcAcrescimo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PcRedBaseIcmProprioSt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PcRedBaseIcmSubst)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlicIcmProprioSt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseIcmProprioSt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlIcmProprioSt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlAcrescimo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FatorConversao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QtVenda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnVenda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlLiquidoVenda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CstIpi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CstPis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CstCofins)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TpOperacaoVeicNovo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlIcmFrete)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConhecimentoVlFrete)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseIcmSubstAnt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlIcmSubstAnt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NrSequenciaOsOri)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlSomaTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HashNfsiR5)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlIcmSubstDev)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseIcmSubstDev)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlicIcmSubstDev)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PcRedBaseIcmSubstDev)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseIpiDev)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlIpiDev)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlicIpiDev)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MvaDev)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CdFci)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlicCsll)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlicIrrf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseCsll)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlCsll)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseIr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlIr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlTribNacional)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlTribImportado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlTribEstadual)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlTribMunicipal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseInss)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlInss)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NrSequenciaDev)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NmCest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NmClassFiscal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CdPedComp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NrItemPedComp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnTrib)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlTrib)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QtTrib)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PcFcp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlFcp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseFcp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseFcpSt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PcFcpSt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlFcpSt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlFcpStRetido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PcFcpStRetido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseFcpStRetido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseFcpUfDestino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PcFcpUfDestino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlFcpUfDestino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlBaseUfDestino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PcIcmsUfDestino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PcIcmsInterno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PcIcmsInternoPartilha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlIcmsUfDestino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VlIcmsUfRemetente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CdContaNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nfsc)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CdProdserv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NmProdserv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlServico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QtProduto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBruto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcDesconto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlLiquido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecoMinimo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CdFuncionario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DtEmissao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PesoLiquido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CdCancelamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cst)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcRedBaseIcm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlicIcm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlicIcmSubst)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlicIpi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlicIss)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseIcm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlIcm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlIcmSubst)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlIpi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlIss)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlTributacaoInf)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseComissao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlComissao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcComissao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlComissaoInf)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Compl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DtAtz)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Un)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlControlarEstoque)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlacaVeiculo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kilometragem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlClassfiscal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlIssSubst)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlComposto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Composicao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseIcmSubst)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlFreteRateado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlicUfDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cfop)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlDesconto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlDescontoRateado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlAcrescimoRateado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlSeguroRateado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlContabil)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlOutros)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlIsento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlicPis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBasePis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlPis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlicCofins)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseCofins)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlCofins)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseIss)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseIpi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Iat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcAcrescimo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcRedBaseIcmProprioSt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcRedBaseIcmSubst)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlicIcmProprioSt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseIcmProprioSt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlIcmProprioSt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlAcrescimo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FatorConversao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QtVenda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnVenda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlLiquidoVenda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CstIpi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CstPis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CstCofins)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TpOperacaoVeicNovo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlIcmFrete)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConhecimentoVlFrete)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseIcmSubstAnt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlIcmSubstAnt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NrSequenciaOsOri)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlSomaTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HashNfsiR5)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlIcmSubstDev)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseIcmSubstDev)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlicIcmSubstDev)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcRedBaseIcmSubstDev)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseIpiDev)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlIpiDev)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlicIpiDev)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MvaDev)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CdFci)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlicCsll)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlicIrrf)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseCsll)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlCsll)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseIr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlIr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlTribNacional)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlTribImportado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlTribEstadual)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlTribMunicipal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseInss)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlInss)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NrSequenciaDev)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NmCest)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NmClassFiscal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CdPedComp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NrItemPedComp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnTrib)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlTrib)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QtTrib)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcFcp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlFcp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseFcp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseFcpSt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcFcpSt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlFcpSt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlFcpStRetido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcFcpStRetido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseFcpStRetido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseFcpUfDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcFcpUfDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlFcpUfDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlBaseUfDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcIcmsUfDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcIcmsInterno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcIcmsInternoPartilha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlIcmsUfDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VlIcmsUfRemetente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CdContaNavigation.CdCompleto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nfsc.FlIgnorarCxaCta)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,24 @@
+Deve identificar potenciais vendas futuras com base nos serviços/produtos oferecidos;
+listar os 10 produtos mais vendidos naquele mes nos tres anos anteriores
+
+Demonstrar os itens(produtos/serviços) com maior crescimento (em valor) de forma
+semanal/mensal/trimestre/semestre/ano;
+10 produtos com maior Crescimento em percentual relativo ao período;
+
+
+Demonstrar, no mínimo mais 4 itens, que pode ser empregado para tomada de decisão;
+
+20% dos produto represemtam 65% do faturamento
+Curva ABC
+
+pior que não ter lucro é ter prejuizo, então esta é a sugestão de cobrança;
+clientes com MAIOR inadimplencias EM VALOR PARA COBRANÇA;
+
+gráfico da meta que indica ações promocionais para se manter dentro da meta antes de prcisar chegar no fim do mes;
+gráfico burndown das vendas para o minimo q a empresa precisa e para a meta.
+
+
+sugestão de promoções dos grupos de produtos menos vendidos.
+produtos não vendidos dentro de 1 ano;
+grupos menos vendidos;
+
