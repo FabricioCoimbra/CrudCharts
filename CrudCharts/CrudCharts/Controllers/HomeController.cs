@@ -66,12 +66,20 @@ namespace CrudCharts.Controllers
 			DateTime InicioEstemesDoAnoPassado = primeiroDiaDoMes.AddYears(-1);
 			DateTime FimEstemesDoAnoPassado = ultimoDiaDoMes.AddYears(-1);
 
+			DateTime InicioAnoRetrasado = primeiroDiaDoMes.AddYears(-2);
+			DateTime FimAnoRetrasado = ultimoDiaDoMes.AddYears(-2);
+
+			DateTime InicioTerceiroAno = primeiroDiaDoMes.AddYears(-3);
+			DateTime FimTerceiroAno = ultimoDiaDoMes.AddYears(-3);
+
 
 			//https://docs.microsoft.com/pt-br/aspnet/core/data/ef-mvc/sort-filter-page?view=aspnetcore-2.0
 			IQueryable<RankingVendas> produtosPorQuantidade =
 				from nota in _context.Nfsi
 				//filtra apenas essas vendas no mesmo mes do ano passado
-				where (nota.DtEmissao >= InicioEstemesDoAnoPassado && nota.DtEmissao <= FimEstemesDoAnoPassado)
+				where (nota.DtEmissao >= InicioEstemesDoAnoPassado && nota.DtEmissao <= FimEstemesDoAnoPassado) || 
+					  (nota.DtEmissao >= InicioAnoRetrasado && nota.DtEmissao <= FimAnoRetrasado) ||
+					  (nota.DtEmissao >= InicioTerceiroAno && nota.DtEmissao <= FimTerceiroAno)
 				group nota by nota.CdProdserv into grupoProduto
 				select new RankingVendas()
 				{
