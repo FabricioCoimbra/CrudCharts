@@ -15,8 +15,12 @@
 {
     <div Style="font-family: Corbel; font-size: small ;text-align:center " class="row">
         <div>
+            <h3 id="Aguarde">Aguarde carregando dados para o gráfico...</h3>
             <div style="width:100%;height:100%">
                 <canvas id="mChart1" style="padding: 0;margin: auto;display: block; "> </canvas>
+            </div>
+            <div style="width:100%;height:100%">
+                <canvas id="mChart2" style="padding: 0;margin: auto;display: block; "> </canvas>
             </div>
         </div>
     </div>
@@ -30,12 +34,12 @@
             success: function (mems) {
                 var aData = mems;
                 var aLabels = aData[0];
-                var aDatasets1 = aData[1];
-                var dataT = {
+                var aDataQuantidade= aData[1];
+                var TotalQuantidade = {
                     labels: aLabels,
                     datasets: [{
                         label: "Quantidade vendida",
-                        data: aDatasets1,
+                        data: aDataQuantidade,
                         fill: false,
                         backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)",
                             "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"],
@@ -46,12 +50,13 @@
                 };
 
                 var ctx2 = document.getElementById('mChart1').getContext('2d');
+                document.getElementById('Aguarde').hidden = true;
                 var myNewChart = new Chart(ctx2, {
                     type: 'bar',
-                    data: dataT,
+                    data: TotalQuantidade,
                     options: {
                         responsive: true,
-                        title: { display: true, text: 'Top 10 produtos mais vendidos desde que a empresa nasceu' },
+                        title: { display: true, text: 'Previsao de venda desse mes baseando-se nas vendas do ano passado' },
                         legend: { position: 'bottom' },
                         scales: {
                             xAxes: [{ gridLines: { display: false }, display: true, scaleLabel: { display: false, labelString: '' } }],

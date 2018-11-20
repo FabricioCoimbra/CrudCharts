@@ -60,9 +60,18 @@ namespace CrudCharts.Controllers
 			//https://www.devmedia.com.br/linq-e-csharp-efetuando-consultas-com-lambda-expressions/38863
 			List<RankingVendas> ListaProdutosMaisVendidos = new List<RankingVendas>();
 
+			DateTime data = DateTime.Today;
+			DateTime primeiroDiaDoMes = new DateTime(data.Year, data.Month, 1);
+			DateTime ultimoDiaDoMes = new DateTime(data.Year, data.Month, DateTime.DaysInMonth(data.Year, data.Month));
+			DateTime InicioEstemesDoAnoPassado = primeiroDiaDoMes.AddYears(-1);
+			DateTime FimEstemesDoAnoPassado = ultimoDiaDoMes.AddYears(-1);
+
+
 			//https://docs.microsoft.com/pt-br/aspnet/core/data/ef-mvc/sort-filter-page?view=aspnetcore-2.0
 			IQueryable<RankingVendas> produtosPorQuantidade =
 				from nota in _context.Nfsi
+				//filtra apenas essas vendas no mesmo mes do ano passado
+				where (nota.DtEmissao >= InicioEstemesDoAnoPassado && nota.DtEmissao <= FimEstemesDoAnoPassado)
 				group nota by nota.CdProdserv into grupoProduto
 				select new RankingVendas()
 				{
@@ -71,21 +80,30 @@ namespace CrudCharts.Controllers
 				};
 
 			ListaProdutosMaisVendidos = produtosPorQuantidade.AsNoTracking().Take(10).OrderByDescending(x => x.quantidadeProdutosvendidos).ToList();
+			List<RankingVendas> ListaCompleta = new List<RankingVendas>();
 			foreach (var produto in ListaProdutosMaisVendidos)
 			{
-				var valor = _context.Nfsi.Where(k => k.CdProdserv.Equals(produto.cd_prodserv)).Sum(x => x.QtVenda);
+				var valor = _context.Nfsi.Where(k => k.CdProdserv.Equals(produto.cd_prodserv)).Sum(x => x.VlLiquido);
+				ListaCompleta.Add(new RankingVendas { cd_prodserv = produto.cd_prodserv,
+					quantidadeProdutosvendidos = produto.quantidadeProdutosvendidos,
+					valorProdutosVendidos = (Double)valor
+				});
 			}
-			List<object> iDados = new List<object>();
+
+				List<object> iDados = new List<object>();
 			//Criando dados de exemplo
 			DataTable dt = new DataTable();
 			dt.Columns.Add("Vendas", System.Type.GetType("System.String"));
 			dt.Columns.Add("QuantidadeVendida", System.Type.GetType("System.Int32"));
+			dt.Columns.Add("ValorVendido", System.Type.GetType("System.Double"));
 			DataRow dr;
 
-			foreach (var produto in ListaProdutosMaisVendidos){
+			foreach (var produto in ListaCompleta)
+			{
 				dr = dt.NewRow();
-				dr["Vendas"] = $"Produto {0}" + produto.cd_prodserv.ToString();
+				dr["Vendas"] = "Produto " + produto.cd_prodserv.ToString();//nao funcionou pegar o nome do produto + _context.Produto.Where(x => x.CdProduto.Equals(produto.cd_prodserv)).First().NmProduto;
 				dr["QuantidadeVendida"] = produto.quantidadeProdutosvendidos;
+				dr["ValorVendido"] = produto.valorProdutosVendidos;
 				dt.Rows.Add(dr);			
 			}
 			
