@@ -57,7 +57,12 @@ namespace CrudCharts.Controllers
 		[HttpPost]
 		public JsonResult NovoGrafico()
 		{
-		//https://docs.microsoft.com/pt-br/aspnet/core/data/ef-mvc/sort-filter-page?view=aspnetcore-2.0
+			//https://www.devmedia.com.br/linq-e-csharp-efetuando-consultas-com-lambda-expressions/38863
+			List<RankingVendas> ListaProdutosMaisVendidos = new List<RankingVendas>();
+
+			var top10 = _context.Nfsi.Sum(x => x.QtVenda);
+
+			//https://docs.microsoft.com/pt-br/aspnet/core/data/ef-mvc/sort-filter-page?view=aspnetcore-2.0
 			IQueryable<RankingVendas> data =
 				from nota in _context.Nfsi
 				group nota by nota.CdProdserv into grupoProduto
@@ -66,7 +71,6 @@ namespace CrudCharts.Controllers
 					cd_prodserv = int.Parse(grupoProduto.Key),
 					quantidadeProdutosvendidos = grupoProduto.Count()
 				};
-			//return View(await data.AsNoTracking().ToListAsync());
 
 			List<object> iDados = new List<object>();
 			//Criando dados de exemplo
