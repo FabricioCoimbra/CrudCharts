@@ -95,12 +95,10 @@ namespace CrudCharts.Controllers
 		public JsonResult NovoGrafico()
 		{
 			//https://www.devmedia.com.br/linq-e-csharp-efetuando-consultas-com-lambda-expressions/38863
-			List<RankingVendas> ListaProdutosMaisVendidos = new List<RankingVendas>();
-
 			//https://docs.microsoft.com/pt-br/aspnet/core/data/ef-mvc/sort-filter-page?view=aspnetcore-2.0
 			IQueryable<RankingVendas> produtosPorQuantidade =
 				from nota in _context.Nfsi
-				//filtra apenas essas vendas no mesmo mes do ano passado
+					//filtra apenas essas vendas no mesmo mes dos ultimos 3 anos
 				where (nota.DtEmissao >= InicioEstemesDoAnoPassado && nota.DtEmissao <= FimEstemesDoAnoPassado) || 
 					  (nota.DtEmissao >= InicioAnoRetrasado && nota.DtEmissao <= FimAnoRetrasado) ||
 					  (nota.DtEmissao >= InicioTerceiroAno && nota.DtEmissao <= FimTerceiroAno)
@@ -111,7 +109,7 @@ namespace CrudCharts.Controllers
 					quantidadeProdutosvendidos = grupoProduto.Count()
 				};
 
-			ListaProdutosMaisVendidos = produtosPorQuantidade.AsNoTracking().Take(10).OrderByDescending(x => x.quantidadeProdutosvendidos).ToList();
+			var ListaProdutosMaisVendidos = produtosPorQuantidade.AsNoTracking().Take(10).OrderByDescending(x => x.quantidadeProdutosvendidos).ToList();
 			List<RankingVendas> ListaCompleta = new List<RankingVendas>();
 			foreach (var produto in ListaProdutosMaisVendidos)
 			{
@@ -146,13 +144,9 @@ namespace CrudCharts.Controllers
 		[HttpPost]
 		public JsonResult GruposMenosVendidos()
 		{
-			//https://www.devmedia.com.br/linq-e-csharp-efetuando-consultas-com-lambda-expressions/38863
-			List<RankingVendas> ListaProdutosMaisVendidos = new List<RankingVendas>();
-
-			//https://docs.microsoft.com/pt-br/aspnet/core/data/ef-mvc/sort-filter-page?view=aspnetcore-2.0
-			IQueryable<RankingVendas> produtosPorQuantidade =
+			IQueryable<RankingVendas> gruposPorQuantidade =
 				from nota in _context.Nfsi
-					//filtra apenas essas vendas no mesmo mes do ano passado
+					//filtra apenas essas vendas no mesmo mes dos ultimos 3 anos
 				where (nota.DtEmissao >= InicioEstemesDoAnoPassado && nota.DtEmissao <= FimEstemesDoAnoPassado) ||
 					  (nota.DtEmissao >= InicioAnoRetrasado && nota.DtEmissao <= FimAnoRetrasado) ||
 					  (nota.DtEmissao >= InicioTerceiroAno && nota.DtEmissao <= FimTerceiroAno)
@@ -165,7 +159,7 @@ namespace CrudCharts.Controllers
 					quantidadeProdutosvendidos = grupoProduto.Count()
 				};
 
-			ListaProdutosMaisVendidos = produtosPorQuantidade.AsNoTracking().Take(5).OrderBy(x => x.quantidadeProdutosvendidos).ToList();
+			var ListaProdutosMaisVendidos = gruposPorQuantidade.AsNoTracking().Take(5).OrderBy(x => x.quantidadeProdutosvendidos).ToList();
 			List<RankingVendas> ListaCompleta = new List<RankingVendas>();
 			foreach (var produto in ListaProdutosMaisVendidos)
 			{
@@ -193,7 +187,54 @@ namespace CrudCharts.Controllers
 				dr["ValorVendido"] = produto.valorProdutosVendidos;
 				dt.Rows.Add(dr);
 			}
+			return RetornaResult(dt);
+		}
 
+		// no futuro se tornara a lista dos produtos com maior crescimento de vendas;
+		[HttpPost]
+		public JsonResult CrescimentoDeVendas()
+		{
+			IQueryable<RankingVendas> produtosLucrando =
+				from nota in _context.Nfsi
+					//precisa fazer isso funcionar ainda....
+				where (nota.DtEmissao >= InicioEstemesDoAnoPassado && nota.DtEmissao <= FimEstemesDoAnoPassado) ||
+					  (nota.DtEmissao >= InicioAnoRetrasado && nota.DtEmissao <= FimAnoRetrasado) ||
+					  (nota.DtEmissao >= InicioTerceiroAno && nota.DtEmissao <= FimTerceiroAno)
+				group nota by nota.CdProdserv into grupoProduto
+				select new RankingVendas()
+				{
+					cd_prodserv = int.Parse(grupoProduto.Key),
+					quantidadeProdutosvendidos = grupoProduto.Count()
+				};
+
+			var ListaProdutosMaisVendidos = produtosLucrando.AsNoTracking().Take(5).OrderByDescending(x => x.quantidadeProdutosvendidos).ToList();
+			List<RankingVendas> ListaCompleta = new List<RankingVendas>();
+			foreach (var produto in ListaProdutosMaisVendidos)
+			{
+				var valor = _context.Nfsi.Where(k => k.CdProdserv.Equals(produto.cd_prodserv)).Sum(x => x.VlLiquido);
+				ListaCompleta.Add(new RankingVendas
+				{
+					cd_prodserv = produto.cd_prodserv,
+					quantidadeProdutosvendidos = produto.quantidadeProdutosvendidos,
+					valorProdutosVendidos = (Double)valor
+				});
+			}
+
+			//Carregando dados
+			DataTable dt = new DataTable();
+			dt.Columns.Add("Vendas", System.Type.GetType("System.String"));
+			dt.Columns.Add("QuantidadeVendida", System.Type.GetType("System.Int32"));
+			dt.Columns.Add("ValorVendido", System.Type.GetType("System.Double"));
+			DataRow dr;
+
+			foreach (var produto in ListaCompleta)
+			{
+				dr = dt.NewRow();
+				dr["Vendas"] = "Produto " + produto.cd_prodserv.ToString();
+				dr["QuantidadeVendida"] = produto.quantidadeProdutosvendidos / 100;
+				dr["ValorVendido"] = produto.valorProdutosVendidos;
+				dt.Rows.Add(dr);
+			}
 			return RetornaResult(dt);
 		}
 	}
