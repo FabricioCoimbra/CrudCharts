@@ -72,6 +72,8 @@ namespace CrudCharts.Controllers
 					quantidadeProdutosvendidos = grupoProduto.Count()
 				};
 
+			ListaProdutosMaisVendidos = data.AsNoTracking().Take(10).OrderByDescending(x => x.quantidadeProdutosvendidos).ToList();
+
 			List<object> iDados = new List<object>();
 			//Criando dados de exemplo
 			DataTable dt = new DataTable();
@@ -85,18 +87,14 @@ namespace CrudCharts.Controllers
 			dr["Vendas"] = "Huynday HB20";
 			dr["Unidades"] = 96;
 			dt.Rows.Add(dr);
-			dr = dt.NewRow();
-			dr["Vendas"] = "Ford Ka(Hatch)";
-			dr["Unidades"] = 87;
-			dt.Rows.Add(dr);
-			dr = dt.NewRow();
-			dr["Vendas"] = "WolksVagem Gol";
-			dr["Unidades"] = 67;
-			dt.Rows.Add(dr);
-			dr = dt.NewRow();
-			dr["Vendas"] = "Renaul Sandero";
-			dr["Unidades"] = 63;
-			dt.Rows.Add(dr);
+
+			foreach (var produto in ListaProdutosMaisVendidos){
+				dr = dt.NewRow();
+				dr["Vendas"] = $"Produto {0}" + produto.cd_prodserv.ToString();
+				dr["Unidades"] = produto.quantidadeProdutosvendidos;
+				dt.Rows.Add(dr);			
+			}
+			
 			//Percorrendo e extraindo cada DataColumn para List<Object>
 			foreach (DataColumn dc in dt.Columns)
 			{
