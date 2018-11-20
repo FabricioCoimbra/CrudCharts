@@ -60,10 +60,8 @@ namespace CrudCharts.Controllers
 			//https://www.devmedia.com.br/linq-e-csharp-efetuando-consultas-com-lambda-expressions/38863
 			List<RankingVendas> ListaProdutosMaisVendidos = new List<RankingVendas>();
 
-			var top10 = _context.Nfsi.Sum(x => x.QtVenda);
-
 			//https://docs.microsoft.com/pt-br/aspnet/core/data/ef-mvc/sort-filter-page?view=aspnetcore-2.0
-			IQueryable<RankingVendas> data =
+			IQueryable<RankingVendas> produtosPorQuantidade =
 				from nota in _context.Nfsi
 				group nota by nota.CdProdserv into grupoProduto
 				select new RankingVendas()
@@ -72,26 +70,22 @@ namespace CrudCharts.Controllers
 					quantidadeProdutosvendidos = grupoProduto.Count()
 				};
 
-			ListaProdutosMaisVendidos = data.AsNoTracking().Take(10).OrderByDescending(x => x.quantidadeProdutosvendidos).ToList();
-
+			ListaProdutosMaisVendidos = produtosPorQuantidade.AsNoTracking().Take(10).OrderByDescending(x => x.quantidadeProdutosvendidos).ToList();
+			foreach (var produto in ListaProdutosMaisVendidos)
+			{
+				var valor = _context.Nfsi.Where(k => k.CdProdserv.Equals(produto.cd_prodserv)).Sum(x => x.QtVenda);
+			}
 			List<object> iDados = new List<object>();
 			//Criando dados de exemplo
 			DataTable dt = new DataTable();
 			dt.Columns.Add("Vendas", System.Type.GetType("System.String"));
-			dt.Columns.Add("Unidades", System.Type.GetType("System.Int32"));
-			DataRow dr = dt.NewRow();
-			dr["Vendas"] = "Chevrolet Onix";
-			dr["Unidades"] = 50;// ListaProdutosMaisVendidos.Count;
-			dt.Rows.Add(dr);
-			dr = dt.NewRow();
-			dr["Vendas"] = "Huynday HB20";
-			dr["Unidades"] = 96;
-			dt.Rows.Add(dr);
+			dt.Columns.Add("QuantidadeVendida", System.Type.GetType("System.Int32"));
+			DataRow dr;
 
 			foreach (var produto in ListaProdutosMaisVendidos){
 				dr = dt.NewRow();
 				dr["Vendas"] = $"Produto {0}" + produto.cd_prodserv.ToString();
-				dr["Unidades"] = produto.quantidadeProdutosvendidos;
+				dr["QuantidadeVendida"] = produto.quantidadeProdutosvendidos;
 				dt.Rows.Add(dr);			
 			}
 			
