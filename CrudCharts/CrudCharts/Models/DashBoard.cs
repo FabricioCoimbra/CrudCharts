@@ -7,7 +7,7 @@ namespace CrudCharts.Models
 {
 	public class DashBoard
 	{
-		public DateTime dataVenda { get; set; }
-		public DateTime dataCompra { get; set; }
+		public DateTime DataVenda { get; set; }
+		public DateTime DataCompra { get; set; }
 	}
 }

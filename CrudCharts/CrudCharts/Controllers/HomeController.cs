@@ -55,43 +55,18 @@ namespace CrudCharts.Controllers
 		}
 
 		[HttpPost]
-		public async Task<JsonResult> NovoGrafico()
+		public JsonResult NovoGrafico()
 		{
-			var conn = _context.Database.GetDbConnection();
-			List<RankingVendas> ListaProdutosMaisVendidos = new List<RankingVendas>();
-
-			try
-			{
-				await conn.OpenAsync();
-				using (var command = conn.CreateCommand())
+		//https://docs.microsoft.com/pt-br/aspnet/core/data/ef-mvc/sort-filter-page?view=aspnetcore-2.0
+			IQueryable<RankingVendas> data =
+				from nota in _context.Nfsi
+				group nota by nota.CdProdserv into grupoProduto
+				select new RankingVendas()
 				{
-					string query = "select nfsi.cd_prodserv, " +
-								 " count(nfsi.cd_prodserv) as quantidadeProdutosvendidos, " +
-								 " sum(nfsi.vl_total) as valorProdutosVendidos " +
-							" from nfsi " +
-						   " group by 1 " +
-							"order by sum(nfsi.vl_total)";
-					command.CommandText = query;
-					DbDataReader reader = await command.ExecuteReaderAsync();
-
-					if (reader.HasRows)
-					{
-						while (await reader.ReadAsync())
-						{
-							var row = new RankingVendas { cd_prodserv = reader.GetInt32(0),
-														  quantidadeProdutosvendidos = reader.GetDouble(1),
-														  valorProdutosVendidos = reader.GetDouble(2) };
-							ListaProdutosMaisVendidos.Add(row);
-						}
-					}
-					reader.Dispose();
-				}
-			}
-			finally
-			{
-				conn.Close();
-			}
-			
+					cd_prodserv = int.Parse(grupoProduto.Key),
+					quantidadeProdutosvendidos = grupoProduto.Count()
+				};
+			//return View(await data.AsNoTracking().ToListAsync());
 
 			List<object> iDados = new List<object>();
 			//Criando dados de exemplo
@@ -126,7 +101,7 @@ namespace CrudCharts.Controllers
 				iDados.Add(x);
 			}
 			//Dados retornados no formato JSON
-			return Json(ListaProdutosMaisVendidos);
+			return Json(iDados);
 		}
 	}
 }

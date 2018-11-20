@@ -44,3 +44,4 @@ C:\Fontes\CSharp\ProcessoDecisorio\CrudCharts\CrudCharts\obj\Debug\netcoreapp2.1
 C:\Fontes\CSharp\ProcessoDecisorio\CrudCharts\CrudCharts\obj\Debug\netcoreapp2.1\Razor\Views\Nfsis\Details.g.cshtml.cs
 C:\Fontes\CSharp\ProcessoDecisorio\CrudCharts\CrudCharts\obj\Debug\netcoreapp2.1\Razor\Views\Nfsis\Edit.g.cshtml.cs
 C:\Fontes\CSharp\ProcessoDecisorio\CrudCharts\CrudCharts\obj\Debug\netcoreapp2.1\Razor\Views\Nfsis\Index.g.cshtml.cs
+C:\Fontes\CSharp\ProcessoDecisorio\CrudCharts\CrudCharts\obj\Debug\netcoreapp2.1\CrudCharts.csprojAssemblyReference.cache
