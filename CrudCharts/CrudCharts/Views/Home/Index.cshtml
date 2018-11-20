@@ -116,5 +116,49 @@
                 });
             }
         });
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/GruposMenosVendidos",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (mems) {
+                var aData = mems;
+                var aLabels = aData[0];
+                var aDataQuantidade = aData[1];
+                var TotalQuantidade = {
+                    labels: aLabels,
+                    datasets: [{
+                        label: "Quantidade vendida",
+                        data: aDataQuantidade,
+                        fill: false,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)",
+                            "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"],
+                        borderColor: ["rgb(54, 162, 235)", "rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)",
+                            "rgb(75, 192, 192)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"],
+                        borderWidth: 5
+                    }]
+                };
+
+                var ctx = document.getElementById('mChart2').getContext('2d');
+                document.getElementById('Aguarde2').hidden = true;
+                var myNewChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: TotalQuantidade,
+                    options: {
+                        responsive: true,
+                        title: { display: true, text: 'Grupos menos vendidos neste mes baseado nos ultimos 3 anos' },
+                        legend: { position: 'bottom' },
+                        scales: {
+                            xAxes: [{ gridLines: { display: false }, display: true, scaleLabel: { display: false, labelString: '' } }],
+                            yAxes: [{
+                                gridLines: { display: false }, display: true, scaleLabel: { display: false, labelString: '' },
+                                ticks: { stepSize: 50, beginAtZero: true }
+                            }]
+                        },
+                    }
+                });
+            }
+        });
     </script>
 }

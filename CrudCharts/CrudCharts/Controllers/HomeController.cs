@@ -15,9 +15,30 @@ namespace CrudCharts.Controllers
 	{
 		private readonly TreinamentoContext _context;
 
+		private DateTime InicioEstemesDoAnoPassado;
+		private DateTime FimEstemesDoAnoPassado;
+
+		private DateTime InicioAnoRetrasado;
+		private DateTime FimAnoRetrasado;
+
+		private DateTime InicioTerceiroAno;
+		private DateTime FimTerceiroAno;
+
 		public HomeController(TreinamentoContext context)
 		{
 			_context = context;
+
+			DateTime data = DateTime.Today;
+			DateTime primeiroDiaDoMes = new DateTime(data.Year, data.Month, 1);
+			DateTime ultimoDiaDoMes = new DateTime(data.Year, data.Month, DateTime.DaysInMonth(data.Year, data.Month));
+			InicioEstemesDoAnoPassado = primeiroDiaDoMes.AddYears(-1);
+			FimEstemesDoAnoPassado = ultimoDiaDoMes.AddYears(-1);
+
+			InicioAnoRetrasado = primeiroDiaDoMes.AddYears(-2);
+			FimAnoRetrasado = ultimoDiaDoMes.AddYears(-2);
+
+			InicioTerceiroAno = primeiroDiaDoMes.AddYears(-3);
+			FimTerceiroAno = ultimoDiaDoMes.AddYears(-3);
 		}
 
 		public IActionResult Index()
@@ -54,6 +75,20 @@ namespace CrudCharts.Controllers
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 
+		private JsonResult RetornaResult(DataTable dt)
+		{
+			List<object> iDados = new List<object>();
+			//Percorrendo e extraindo cada DataColumn para List<Object> não sei porque?
+			foreach (DataColumn dc in dt.Columns)
+			{
+				List<object> x = new List<object>();
+				x = (from DataRow drr in dt.Rows select drr[dc.ColumnName]).ToList();
+				iDados.Add(x);
+			}
+			//Dados retornados no formato JSON
+			return Json(iDados);
+		}
+
 		//Item 1 - Deve identificar potenciais vendas futuras com base nos serviços/produtos oferecidos;
 		//listar os 10 produtos mais vendidos naquele mes nos tres anos anteriores
 		[HttpPost]
@@ -61,19 +96,6 @@ namespace CrudCharts.Controllers
 		{
 			//https://www.devmedia.com.br/linq-e-csharp-efetuando-consultas-com-lambda-expressions/38863
 			List<RankingVendas> ListaProdutosMaisVendidos = new List<RankingVendas>();
-
-			DateTime data = DateTime.Today;
-			DateTime primeiroDiaDoMes = new DateTime(data.Year, data.Month, 1);
-			DateTime ultimoDiaDoMes = new DateTime(data.Year, data.Month, DateTime.DaysInMonth(data.Year, data.Month));
-			DateTime InicioEstemesDoAnoPassado = primeiroDiaDoMes.AddYears(-1);
-			DateTime FimEstemesDoAnoPassado = ultimoDiaDoMes.AddYears(-1);
-
-			DateTime InicioAnoRetrasado = primeiroDiaDoMes.AddYears(-2);
-			DateTime FimAnoRetrasado = ultimoDiaDoMes.AddYears(-2);
-
-			DateTime InicioTerceiroAno = primeiroDiaDoMes.AddYears(-3);
-			DateTime FimTerceiroAno = ultimoDiaDoMes.AddYears(-3);
-
 
 			//https://docs.microsoft.com/pt-br/aspnet/core/data/ef-mvc/sort-filter-page?view=aspnetcore-2.0
 			IQueryable<RankingVendas> produtosPorQuantidade =
@@ -101,7 +123,7 @@ namespace CrudCharts.Controllers
 			}
 
 				List<object> iDados = new List<object>();
-			//Criando dados de exemplo
+			//Carrega dados
 			DataTable dt = new DataTable();
 			dt.Columns.Add("Vendas", System.Type.GetType("System.String"));
 			dt.Columns.Add("QuantidadeVendida", System.Type.GetType("System.Int32"));
@@ -116,37 +138,16 @@ namespace CrudCharts.Controllers
 				dr["ValorVendido"] = produto.valorProdutosVendidos;
 				dt.Rows.Add(dr);			
 			}
-			
-			//Percorrendo e extraindo cada DataColumn para List<Object> não sei porque?
-			foreach (DataColumn dc in dt.Columns)
-			{
-				List<object> x = new List<object>();
-				x = (from DataRow drr in dt.Rows select drr[dc.ColumnName]).ToList();
-				iDados.Add(x);
-			}
-			//Dados retornados no formato JSON
-			return Json(iDados);
+
+			return RetornaResult(dt);
 		}
 
-		//grupos de produtos menos vendidos nos utilmos 3 anos;
+		//grupos de produtos menos vendidos nos utilmos 3 anos para sugestão de promoções do mes;
 		[HttpPost]
 		public JsonResult GruposMenosVendidos()
 		{
 			//https://www.devmedia.com.br/linq-e-csharp-efetuando-consultas-com-lambda-expressions/38863
 			List<RankingVendas> ListaProdutosMaisVendidos = new List<RankingVendas>();
-
-			DateTime data = DateTime.Today;
-			DateTime primeiroDiaDoMes = new DateTime(data.Year, data.Month, 1);
-			DateTime ultimoDiaDoMes = new DateTime(data.Year, data.Month, DateTime.DaysInMonth(data.Year, data.Month));
-			DateTime InicioEstemesDoAnoPassado = primeiroDiaDoMes.AddYears(-1);
-			DateTime FimEstemesDoAnoPassado = ultimoDiaDoMes.AddYears(-1);
-
-			DateTime InicioAnoRetrasado = primeiroDiaDoMes.AddYears(-2);
-			DateTime FimAnoRetrasado = ultimoDiaDoMes.AddYears(-2);
-
-			DateTime InicioTerceiroAno = primeiroDiaDoMes.AddYears(-3);
-			DateTime FimTerceiroAno = ultimoDiaDoMes.AddYears(-3);
-
 
 			//https://docs.microsoft.com/pt-br/aspnet/core/data/ef-mvc/sort-filter-page?view=aspnetcore-2.0
 			IQueryable<RankingVendas> produtosPorQuantidade =
@@ -177,8 +178,7 @@ namespace CrudCharts.Controllers
 				});
 			}
 
-			List<object> iDados = new List<object>();
-			//Criando dados de exemplo
+			//Carregando dados
 			DataTable dt = new DataTable();
 			dt.Columns.Add("Vendas", System.Type.GetType("System.String"));
 			dt.Columns.Add("QuantidadeVendida", System.Type.GetType("System.Int32"));
@@ -188,21 +188,13 @@ namespace CrudCharts.Controllers
 			foreach (var produto in ListaCompleta)
 			{
 				dr = dt.NewRow();
-				dr["Vendas"] = "Grupo " + produto.cd_prodserv.ToString();//nao funcionou pegar o nome do produto + _context.Produto.Where(x => x.CdProduto.Equals(produto.cd_prodserv)).First().NmProduto;
+				dr["Vendas"] = "Grupo " + produto.cd_prodserv.ToString();
 				dr["QuantidadeVendida"] = produto.quantidadeProdutosvendidos;
 				dr["ValorVendido"] = produto.valorProdutosVendidos;
 				dt.Rows.Add(dr);
 			}
 
-			//Percorrendo e extraindo cada DataColumn para List<Object> não sei porque?
-			foreach (DataColumn dc in dt.Columns)
-			{
-				List<object> x = new List<object>();
-				x = (from DataRow drr in dt.Rows select drr[dc.ColumnName]).ToList();
-				iDados.Add(x);
-			}
-			//Dados retornados no formato JSON
-			return Json(iDados);
+			return RetornaResult(dt);
 		}
 	}
 }
